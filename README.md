@@ -1,9 +1,3 @@
-# Full-Stack Coding Challenge
-
-**Deadline**: Sunday, Feb 23th 11:59 pm PST
-
----
-
 ## Overview
 
 Create a “Task Management” application with **React + TypeScript** (frontend), **Node.js** (or **Nest.js**) (backend), and **PostgreSQL** (database). The application should:
@@ -16,11 +10,7 @@ Create a “Task Management” application with **React + TypeScript** (frontend
    - **Delete a task**.
 
 Focus on **correctness**, **functionality**, and **code clarity** rather than visual design.  
-This challenge is intended to be completed within ~3 hours, so keep solutions minimal yet functional.
 
----
-
-## Requirements
 
 ### 1. Authentication
 
@@ -80,22 +70,25 @@ This challenge is intended to be completed within ~3 hours, so keep solutions mi
 
 ## Deliverables
 
-1. **Fork the Public Repository**: **Fork** this repo into your own GitHub account.
-2. **Implement Your Solution** in the forked repository. Make sure you're README file has:
+2. **How to Set Up the Database** in the forked repository. Make sure you're README file has:
    - Steps to set up the database (migrations, environment variables).
    - How to run the backend.
    - How to run the frontend.
    - Any relevant notes on testing.
    - Salary Expectations per month (Mandatory)
-3. **Short Video Demo**: Provide a link (in a `.md` file in your forked repo) to a brief screen recording showing:
-   - Registering a user
-   - Logging in
-   - Creating, updating, and deleting tasks
-4. **Deadline**: Submissions are due **Sunday, Feb 23th 11:59 pm PST**.
+3. **How to Set Up the Database**
 
-> **Note**: Please keep your solution minimal. The entire project is intended to be completed in around 3 hours. Focus on core features (registration, login, tasks CRUD) rather than polished UI or extra features.
+4. **How to Run the Frontend**
 
----
+5. **How to Run the Backend**
+6. **Testing Notes**
+7. **Salary Expectations per month**
+
+     
+3. **Video Demo**: 
+https://github.com/user-attachments/assets/02632c2d-c55f-46cc-a4e8-317923941b3e
+
+
 
 ## Evaluation Criteria
 
@@ -115,5 +108,3 @@ This challenge is intended to be completed within ~3 hours, so keep solutions mi
 4. **Maintainability**  
    - Organized logic (controllers/services, etc.)
    - Minimal hard-coded values
-
-Good luck, and we look forward to your submission!
