@@ -116,7 +116,7 @@ app.get("/tasks", (req, res) => {
   const decodedToken = jwt.verify(token, JWT_SECRET);
 
   const id = decodedToken.userId;
-  
+
   const query = `SELECT * FROM tasks WHERE userId=$1`;
 
   values = [id];
@@ -132,51 +132,76 @@ app.get("/tasks", (req, res) => {
 
 // POST /tasks – Create a new task.
 app.post("/tasks", (req, res) => {
-  const { id, token } = req.body;
+  const { title, description, isComplete } = req.body;
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    res.status(200).json({
+      success: false,
+      message: "Error! User Not Authenticated.",
+    });
+  }
 
-  // const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
+  const decodedToken = jwt.verify(token, JWT_SECRET);
 
-  //   client.query(query, values, (err, result) => {
-  //     if (err) {
-  //       console.error("Error inserting data:", err.stack);
-  //       res.status(500).send("Failed to insert data into the database");
-  //     } else {
-  //       res.json("result.rows[0]");
-  //     }
-  //   });
-  // });
+  const id = decodedToken.userId;
+
+  const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
+
+  client.query(query, [title, description, isComplete, id], (err, result) => {
+    if (err) {
+      console.error("Error inserting data:", err.stack);
+      res.status(500).send("Failed to insert data into the database");
+    } else {
+      res.json("result.rows[0]");
+    }
+  });
 });
 
 // PUT /tasks/:id – Update a task (e.g., mark as complete, edit text).
-app.put("/tasks:id", (req, res) => {
-  const { id, token } = req.body;
+app.put("/tasks/:id", (req, res) => {
+  const { id } = req.params;
+  const { title, description, isComplete } = req.body;
 
-  // const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    res.status(200).json({
+      success: false,
+      message: "Error! User Not Authenticated.",
+    });
+  }
 
-  //   client.query(query, values, (err, result) => {
-  //     if (err) {
-  //       console.error("Error inserting data:", err.stack);
-  //       res.status(500).send("Failed to insert data into the database");
-  //     } else {
-  //       res.json("result.rows[0]");
-  //     }
-  //   });
-  // });
+  const query = `UPDATE tasks SET title = $1, description = $2, iscomplete = $3 WHERE id = $4`;
+
+  client.query(query, [title, description, isComplete, id], (err, result) => {
+    if (err) {
+      res.status(500).send("Failed to update data");
+    } else {
+      res.json("Updated");
+    }
+  });
 });
 
 // DELETE /tasks/:id – Delete a task.
-app.delete("/tasks:id", (req, res) => {
-  const { id, token } = req.body;
+app.delete("/tasks/:id", (req, res) => {
+  const { id } = req.params;
 
-  // const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    res.status(200).json({
+      success: false,
+      message: "Error! User Not Authenticated.",
+    });
+  }
 
-  //   client.query(query, values, (err, result) => {
-  //     if (err) {
-  //       console.error("Error inserting data:", err.stack);
-  //       res.status(500).send("Failed to insert data into the database");
-  //     } else {
-  //       res.json("result.rows[0]");
-  //     }
-  //   });
-  // });
+  console.log(id);
+
+  const query = `DELETE FROM tasks WHERE id=$1`;
+
+  client.query(query, [id], (err, result) => {
+    if (err) {
+      res.status(500).send("Failed to delete data from the database");
+    } else {
+      res.json("Deleted");
+    }
+  });
 });
