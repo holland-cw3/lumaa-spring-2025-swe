@@ -47,6 +47,7 @@ form h1{
 
 
 
+
 .loginBtn{
   font-size: 20px;
   background-color: blue;
@@ -62,3 +63,38 @@ form h1{
 
 }
 
+table{
+
+  width:50vw;
+  border-spacing: 0px;
+
+}
+
+td{
+  border: 1px solid rgba(87, 86, 86, 0.2)
+
+}
+
+.header{
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin-right: 2vw;
+  margin-top: 1vh;
+
+}
+
+.header button{
+  background-color: red;
+  color: white;
+  font-size: 20px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 10px;
+
+  padding-bottom: 10px;
+
+
+  border-style: none;
+  border-radius: 2px;
+}
