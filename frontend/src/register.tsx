@@ -4,7 +4,7 @@ async function send(username: String, password: String) {
   const data = { username, password };
 
   try {
-    const response = await fetch("http://localhost:5000/auth/login", {
+    const response = await fetch("http://localhost:5000/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -12,13 +12,11 @@ async function send(username: String, password: String) {
       body: JSON.stringify(data),
     });
 
-   
+    const responseBody = await response.json(); // Get response body
     if (response.ok) {
-      const res = await response.json();
-      localStorage.setItem("token", res.token);
-      alert("Login Successful!");
+      console.log("User data submitted successfully:", responseBody);
     } else {
-      alert("Login Failed: Username or Password is incorrect")
+      console.error("Failed to submit data:", responseBody);
     }
   } catch (error) {
     console.error("Error submitting data:", error);
