@@ -9,6 +9,9 @@ Create a “Task Management” application with **React + TypeScript** (frontend
    - **Update an existing task** (e.g., mark complete, edit).
    - **Delete a task**.
 
+**Video Demo**: 
+https://github.com/user-attachments/assets/02632c2d-c55f-46cc-a4e8-317923941b3e
+
 ## Set Up
 
 **Important: Clone this repository first!!
@@ -32,9 +35,8 @@ Create a “Task Management” application with **React + TypeScript** (frontend
 - Run `npm install`
 - `npm start`
   
-7. **Testing Notes**
-8. **Salary Expectations per month**
+**Testing Notes**
+- Make sure you have two separate terminals to run frontend/backend
 
-     
-3. **Video Demo**: 
-https://github.com/user-attachments/assets/02632c2d-c55f-46cc-a4e8-317923941b3e
+**Salary Expectations per month**
+$1200 ($15/hr)
