@@ -33,9 +33,23 @@ app.listen(5000, (err) => {
   });
 });
 
+///// ---------Token Verification--------- /////
+// For Secure Task Endpoints
+
+function verifyJWT(token) {
+  if (!token) {
+    res.status(200).json({
+      success: false,
+      message: "Error! User Not Authenticated.",
+    });
+  }
+  return;
+}
+
 ///// -------------Endpoints------------- /////
 
-// Register
+/**** -------------Register------------- ****/
+
 app.post("/auth/register", (req, res) => {
   const { username, password } = req.body;
 
@@ -56,21 +70,19 @@ app.post("/auth/register", (req, res) => {
           console.error("Error inserting data:", err.stack);
           res.status(500).send("Failed to insert data into the database");
         } else {
-          res.json("result.rows[0]");
+          res.json("Success!");
         }
       });
     });
   });
 });
 
-// Login
+/**** -------------Login------------- ****/
+
 app.post("/auth/login", (req, res) => {
   const { username, password } = req.body;
-  const values = [username];
 
-  const query = `SELECT id, username, password FROM users WHERE username=$1`;
-
-  client.query(query, values, (err, result) => {
+  client.query(`SELECT id, username, password FROM users WHERE username=$1`, [username], (err, result) => {
     if (err) {
       res.status(500).send("No User Exists");
     } else {
@@ -104,24 +116,20 @@ app.post("/auth/login", (req, res) => {
   });
 });
 
-// GET /tasks – Retrieve a list of tasks (optionally filtered by user).
-app.get("/tasks", (req, res) => {
-  const token = req.headers.authorization.split(" ")[1];
-  if (!token) {
-    res.status(200).json({
-      success: false,
-      message: "Error! User Not Authenticated.",
-    });
-  }
-  const decodedToken = jwt.verify(token, JWT_SECRET);
+/**** -----------Get Tasks----------- ****/
+// GET/Retrieve a list of tasks (optionally filtered by user).
 
+app.get("/tasks", (req, res) => {
+  // User Authentication
+  const token = req.headers.authorization.split(" ")[1];
+  verifyJWT(token);
+
+  // Decode JWT
+  const decodedToken = jwt.verify(token, JWT_SECRET);
   const id = decodedToken.userId;
 
-  const query = `SELECT * FROM tasks WHERE userId=$1`;
-
-  values = [id];
-
-  client.query(query, values, (err, result) => {
+  // Query DB
+  client.query(`SELECT * FROM tasks WHERE userId=$1`, [id], (err, result) => {
     if (err) {
       res.status(500).send("No User Exists");
     } else {
@@ -130,76 +138,74 @@ app.get("/tasks", (req, res) => {
   });
 });
 
-// POST /tasks – Create a new task.
+/**** -------------Create Tasks------------- ****/
+// POST/Create a new task.
+
 app.post("/tasks", (req, res) => {
-  const { title, description, isComplete } = req.body;
+  // User Authentication
   const token = req.headers.authorization.split(" ")[1];
-  if (!token) {
-    res.status(200).json({
-      success: false,
-      message: "Error! User Not Authenticated.",
-    });
-  }
+  verifyJWT(token);
 
+  // Decode JWT and Get Body
   const decodedToken = jwt.verify(token, JWT_SECRET);
-
   const id = decodedToken.userId;
+  const { title, description, isComplete } = req.body;
 
-  const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
-
-  client.query(query, [title, description, isComplete, id], (err, result) => {
-    if (err) {
-      console.error("Error inserting data:", err.stack);
-      res.status(500).send("Failed to insert data into the database");
-    } else {
-      res.json("result.rows[0]");
+  // Query DB
+  client.query(
+    `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`,
+    [title, description, isComplete, id],
+    (err, result) => {
+      if (err) {
+        console.error("Error inserting data:", err.stack);
+        res.status(500).send("Failed to insert data into the database");
+      } else {
+        res.json("result.rows[0]");
+      }
     }
-  });
+  );
 });
 
-// PUT /tasks/:id – Update a task (e.g., mark as complete, edit text).
+/**** -------------Update Tasks------------- ****/
+// PUT/Update a task.
+
 app.put("/tasks/:id", (req, res) => {
+  // User Authentication
+  const token = req.headers.authorization.split(" ")[1];
+  verifyJWT(token);
+
+  // Get Params
   const { id } = req.params;
   const { title, description, isComplete } = req.body;
 
-  const token = req.headers.authorization.split(" ")[1];
-  if (!token) {
-    res.status(200).json({
-      success: false,
-      message: "Error! User Not Authenticated.",
-    });
-  }
-
-  const query = `UPDATE tasks SET title = $1, description = $2, iscomplete = $3 WHERE id = $4`;
-
-  client.query(query, [title, description, isComplete, id], (err, result) => {
-    if (err) {
-      res.status(500).send("Failed to update data");
-    } else {
-      res.json("Updated");
+  // Query DB
+  client.query(
+    `UPDATE tasks SET title = $1, description = $2, iscomplete = $3 WHERE id = $4`,
+    [title, description, isComplete, id],
+    (err, result) => {
+      if (err) {
+        res.status(500).send("Failed to update data");
+      } else {
+        res.json("Updated");
+      }
     }
-  });
+  );
 });
 
-// DELETE /tasks/:id – Delete a task.
+/**** -------------DELETE Tasks------------- ****/
+// DELETE a task
+
 app.delete("/tasks/:id", (req, res) => {
+  // User Authentication
+  const token = req.headers.authorization.split(" ")[1];
+  verifyJWT(token);
+
   const { id } = req.params;
 
-  const token = req.headers.authorization.split(" ")[1];
-  if (!token) {
-    res.status(200).json({
-      success: false,
-      message: "Error! User Not Authenticated.",
-    });
-  }
-
-  console.log(id);
-
-  const query = `DELETE FROM tasks WHERE id=$1`;
-
-  client.query(query, [id], (err, result) => {
+  // Query DB
+  client.query(`DELETE FROM tasks WHERE id=$1`, [id], (err, result) => {
     if (err) {
-      res.status(500).send("Failed to delete data from the database");
+      res.status(500).send("Failed to delete from the database");
     } else {
       res.json("Deleted");
     }
