@@ -18,6 +18,8 @@ async function send(username: String, password: String) {
     const responseBody = await response.json(); // Get response body
     if (response.ok) {
       console.log("User data submitted successfully:", responseBody);
+      alert('Registered! Redirecting to login');
+      window.location.href='/login';
     } else {
       console.error("Failed to submit data:", responseBody);
     }
