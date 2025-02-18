@@ -1,8 +1,7 @@
 import { useState } from "react";
 
 
-async function send(username: String, password: String) {
-  const data = { username, password };
+async function register(username: String, password: String) {
 
   try {
     const response = await fetch("http://localhost:5000/auth/register", {
@@ -10,29 +9,27 @@ async function send(username: String, password: String) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({username, password}),
     });
 
-    const responseBody = await response.json(); 
     if (response.ok) {
-      console.log("User data submitted successfully:", responseBody);
       alert('Registered! Redirecting to login');
       window.location.href='/login';
     } else {
-      console.error("Failed to submit data:", responseBody);
+      alert('Failed to Register. Please Try Again');
     }
   } catch (error) {
     console.error("Error submitting data:", error);
   }
 }
 
-export default function UserTasks() {
+export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    await send(username, password);
+    await register(username, password);
   };
 
   return (
@@ -59,7 +56,7 @@ export default function UserTasks() {
         />
         </div>
        
-        <button type="submit" className="loginBtn">Login</button>
+        <button type="submit" className="loginBtn">Register</button>
         <div>Already a User? Login <a href='/login'>Here</a></div>
       </form>
     </div>

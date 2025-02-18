@@ -13,11 +13,7 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding-left: 7vw;
-  padding-right: 7vw;
-  padding-top: 3vh;
-  padding-bottom: 6vh;
-
+  padding: 3vh 7vw 6vh 7vw;
   border: 1px solid rgb(225, 221, 221);
   box-shadow: 5px 5px 2px 1px rgba(113, 112, 112, 0.2);
 }
@@ -27,11 +23,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-left: 7vw;
-  padding-right: 7vw;
-  padding-top: 3vh;
-  padding-bottom: 6vh;
-
+  padding: 3vh 7vw 6vh 7vw;
   border: 1px solid rgb(225, 221, 221);
   box-shadow: 5px 5px 2px 1px rgba(113, 112, 112, 0.2);
 }
@@ -57,7 +49,6 @@ form h1 {
 .loginBtn {
   font-size: 20px;
   background-color: blue;
-  color: white;
   border-style: none;
   width: 100%;
   padding: 10px;
@@ -86,14 +77,8 @@ td {
 
 .header button {
   background-color: red;
-  color: white;
   font-size: 20px;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 10px;
-
-  padding-bottom: 10px;
-
+  padding: 10px 25px 10px 25px;
   border-style: none;
   border-radius: 2px;
 }
@@ -101,35 +86,24 @@ td {
 .deleteBtn {
   background-color: red;
   width: 100%;
-  color: white;
   font-size: 20px;
-
-  padding-top: 10px;
-
-  padding-bottom: 10px;
+  padding: 10px 0px 10px 0px;
   border-style: none;
 }
 
 .updateBtn {
   background-color: green;
   width: 100%;
-  color: white;
   font-size: 20px;
-
-  padding-top: 10px;
-
-  padding-bottom: 10px;
+  padding: 10px 0px 10px 0px;
   border-style: none;
 }
 
 .createBtn {
   background-color: yellowgreen;
   width: 10vw;
-  color: white;
   font-size: 20px;
-
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 0px 10px 0px;
   border-style: none;
   margin-top: 20px;
 }
@@ -141,13 +115,11 @@ table input{
     border: none;
     border-radius: 0px;
     box-shadow: none;
-  
 }
 
 .cancelBtn {
   font-size: 20px;
   background-color: red;
-  color: white;
   border-style: none;
   width: 100%;
   text-decoration: none;
@@ -159,7 +131,7 @@ table input{
 
 button{
   cursor: pointer;
-
+  color: white;
 }
 
 button:hover{

@@ -89,8 +89,6 @@ export default function UserTasks() {
           </a>
         </div>
       </form>
-
-      <div></div>
     </div>
   );
 }

@@ -1,6 +1,4 @@
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 
 interface Task {
   id: number;
@@ -71,13 +69,9 @@ async function load(setTasks: (tasks: Task[]) => void) {
 export default function UserTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    }
-  }, [navigate]);
+  if (!localStorage.getItem("token")) {
+    window.location.href = "/login";
+  }
 
   useEffect(() => {
     load(setTasks);

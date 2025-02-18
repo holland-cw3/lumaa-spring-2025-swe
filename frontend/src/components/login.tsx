@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-async function send(username: String, password: String) {
+async function login(username: String, password: String) {
   const data = { username, password };
 
   try {
@@ -26,13 +26,13 @@ async function send(username: String, password: String) {
   }
 }
 
-export default function UserTasks() {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    await send(username, password);
+    await login(username, password);
   };
 
   return (

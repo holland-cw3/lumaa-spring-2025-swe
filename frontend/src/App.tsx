@@ -18,8 +18,6 @@ export default function App() {
         <Route path="/tasks" element={<Tasks />} />
         <Route path="/tasks/create" element={<Create />} />
         <Route path="/tasks/update" element={<Update />} />
-
-
       </Routes>
     </Router>
   );
