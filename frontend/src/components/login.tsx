@@ -9,7 +9,6 @@ async function login(username: String, password: String) {
       },
       body: JSON.stringify( { username, password }),
     });
-
    
     if (response.ok) {
       const res = await response.json();
