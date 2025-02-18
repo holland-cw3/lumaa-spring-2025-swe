@@ -117,7 +117,7 @@ app.post("/auth/login", (req, res) => {
 });
 
 /**** -----------Get Tasks----------- ****/
-// GET/Retrieve a list of tasks (optionally filtered by user).
+// GET/Retrieve a list of tasks.
 
 app.get("/tasks", (req, res) => {
   // User Authentication
