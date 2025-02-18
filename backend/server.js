@@ -10,8 +10,6 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.use(cors());
 
-
-
 app.listen(5000, (err) => {
   if (err) {
     console.log("Error: Server failed. As lawyers say, you've been served");
@@ -34,6 +32,8 @@ app.listen(5000, (err) => {
     }
   });
 });
+
+///// -------------Endpoints------------- /////
 
 // Register
 app.post("/auth/register", (req, res) => {
@@ -68,7 +68,7 @@ app.post("/auth/login", (req, res) => {
   const { username, password } = req.body;
   const values = [username];
 
-  const query = `SELECT username, password FROM users WHERE username=$1`;
+  const query = `SELECT id, username, password FROM users WHERE username=$1`;
 
   client.query(query, values, (err, result) => {
     if (err) {
@@ -106,13 +106,20 @@ app.post("/auth/login", (req, res) => {
 
 // GET /tasks – Retrieve a list of tasks (optionally filtered by user).
 app.get("/tasks", (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    res.status(200).json({
+      success: false,
+      message: "Error! User Not Authenticated.",
+    });
+  }
+  const decodedToken = jwt.verify(token, JWT_SECRET);
 
-  const id = 12;
-
-
+  const id = decodedToken.userId;
+  
   const query = `SELECT * FROM tasks WHERE userId=$1`;
 
-  values = [id]
+  values = [id];
 
   client.query(query, values, (err, result) => {
     if (err) {
@@ -127,31 +134,49 @@ app.get("/tasks", (req, res) => {
 app.post("/tasks", (req, res) => {
   const { id, token } = req.body;
 
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) {
-      return;
-    }
-   
+  // const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
 
-      const values = [id];
-      const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
-
-      client.query(query, values, (err, result) => {
-        if (err) {
-          console.error("Error inserting data:", err.stack);
-          res.status(500).send("Failed to insert data into the database");
-        } else {
-          res.json("result.rows[0]");
-        }
-      });
-    });
-  });
-
-
- 
+  //   client.query(query, values, (err, result) => {
+  //     if (err) {
+  //       console.error("Error inserting data:", err.stack);
+  //       res.status(500).send("Failed to insert data into the database");
+  //     } else {
+  //       res.json("result.rows[0]");
+  //     }
+  //   });
+  // });
+});
 
 // PUT /tasks/:id – Update a task (e.g., mark as complete, edit text).
-app.put("/tasks:id", (req, res) => {});
+app.put("/tasks:id", (req, res) => {
+  const { id, token } = req.body;
+
+  // const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
+
+  //   client.query(query, values, (err, result) => {
+  //     if (err) {
+  //       console.error("Error inserting data:", err.stack);
+  //       res.status(500).send("Failed to insert data into the database");
+  //     } else {
+  //       res.json("result.rows[0]");
+  //     }
+  //   });
+  // });
+});
 
 // DELETE /tasks/:id – Delete a task.
-app.delete("/tasks:id", (req, res) => {});
+app.delete("/tasks:id", (req, res) => {
+  const { id, token } = req.body;
+
+  // const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
+
+  //   client.query(query, values, (err, result) => {
+  //     if (err) {
+  //       console.error("Error inserting data:", err.stack);
+  //       res.status(500).send("Failed to insert data into the database");
+  //     } else {
+  //       res.json("result.rows[0]");
+  //     }
+  //   });
+  // });
+});
