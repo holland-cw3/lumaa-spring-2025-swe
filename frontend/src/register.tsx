@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import './App.css';
+
+
 async function send(username: String, password: String) {
   const data = { username, password };
 
@@ -33,21 +36,31 @@ export default function UserTasks() {
   };
 
   return (
-    <div>
+    <div className='page'>
+     
       <form onSubmit={handleSubmit}>
+      <h1>Register</h1>
+        <div>
         <input
           type="text"
-          placeholder="username"
+          placeholder="Username"
+          required
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        </div>
+        <div>
         <input
           type="password"
-          placeholder="password"
+          placeholder="Password"
+          required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Submit</button>
+        </div>
+       
+        <button type="submit" className="loginBtn">Login</button>
+        <div>Already a User? Login <a href='/login'>Here</a></div>
       </form>
     </div>
   );

@@ -1,3 +1,64 @@
-.App {
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size:20px;
+  width: 100%;
+}
+
+.page{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-left: 7vw;
+  padding-right: 7vw;
+  padding-top: 3vh;
+  padding-bottom: 6vh;
+
+
+  border: 1px solid rgb(225, 221, 221) ;
+  box-shadow: 5px 5px 2px 1px rgba(113, 112, 112, 0.2);
+  
+}
+
+input{
+  margin-bottom: 20px;
+  font-size: 22px;
+  padding: 12px;
+  border: 1px solid rgb(225, 221, 221) ;
+  box-shadow: 2px 2px 2px 1px rgba(84, 82, 82, 0.2);
+  border-radius: 2px;
+
+}
+
+form{
   text-align: center;
 }
+
+form h1{
+  font-size: 40px;
+  margin-bottom: 3vh;
+}
+
+
+
+
+
+.loginBtn{
+  font-size: 20px;
+  background-color: blue;
+  color: white;
+  border-style: none;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-shadow: 2px 2px 2px 1px rgba(84, 82, 82, 0.2);
+  border-radius: 2px;
+
+
+
+}
+
