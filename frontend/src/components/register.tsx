@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import './App.css';
-
 
 async function send(username: String, password: String) {
   const data = { username, password };
@@ -15,7 +13,7 @@ async function send(username: String, password: String) {
       body: JSON.stringify(data),
     });
 
-    const responseBody = await response.json(); // Get response body
+    const responseBody = await response.json(); 
     if (response.ok) {
       console.log("User data submitted successfully:", responseBody);
       alert('Registered! Redirecting to login');

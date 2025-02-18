@@ -1,5 +1,4 @@
 import { useState } from "react";
-import './App.css';
 
 async function send(username: String, password: String) {
   const data = { username, password };
