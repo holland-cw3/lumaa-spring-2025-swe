@@ -11,9 +11,7 @@ Create a “Task Management” application with **React + TypeScript** (frontend
 
 ## Set Up
 
-- Clone this repository
-- `cd frontend` and run `npm install`
-- `cd backend` and run `npm install`
+**Important: Clone this repository first!!
 
 **How to Set Up the Database** in the forked repository. Make sure you're README file has:
    - Steps to set up the database (migrations, environment variables).
