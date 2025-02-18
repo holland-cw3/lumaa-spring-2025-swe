@@ -4,13 +4,13 @@ const cors = require("cors");
 const client = require("./db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
 const JWT_SECRET = "your-secret-key";
 
 app.use(express.json());
 app.set("view engine", "ejs");
-
 app.use(cors());
+
+
 
 app.listen(5000, (err) => {
   if (err) {
@@ -106,15 +106,49 @@ app.post("/auth/login", (req, res) => {
 
 // GET /tasks – Retrieve a list of tasks (optionally filtered by user).
 app.get("/tasks", (req, res) => {
-  res.send("Tasks");
+
+  const id = 12;
+
+
+  const query = `SELECT * FROM tasks WHERE userId=$1`;
+
+  values = [id]
+
+  client.query(query, values, (err, result) => {
+    if (err) {
+      res.status(500).send("No User Exists");
+    } else {
+      res.json(result.rows);
+    }
+  });
 });
 
 // POST /tasks – Create a new task.
 app.post("/tasks", (req, res) => {
-  const data = req.body;
-  console.log(data);
-  res.json(data);
-});
+  const { id, token } = req.body;
+
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) {
+      return;
+    }
+   
+
+      const values = [id];
+      const query = `INSERT INTO tasks (title, description, iscomplete, userid) VALUES ($1, $2, $3, $4)`;
+
+      client.query(query, values, (err, result) => {
+        if (err) {
+          console.error("Error inserting data:", err.stack);
+          res.status(500).send("Failed to insert data into the database");
+        } else {
+          res.json("result.rows[0]");
+        }
+      });
+    });
+  });
+
+
+ 
 
 // PUT /tasks/:id – Update a task (e.g., mark as complete, edit text).
 app.put("/tasks:id", (req, res) => {});
