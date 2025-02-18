@@ -1,15 +1,13 @@
 import { useState } from "react";
 
 async function login(username: String, password: String) {
-  const data = { username, password };
-
   try {
     const response = await fetch("http://localhost:5000/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify( { username, password }),
     });
 
    

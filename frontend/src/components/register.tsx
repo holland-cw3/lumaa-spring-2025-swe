@@ -1,22 +1,20 @@
 import { useState } from "react";
 
-
 async function register(username: String, password: String) {
-
   try {
     const response = await fetch("http://localhost:5000/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({username, password}),
+      body: JSON.stringify({ username, password }),
     });
 
     if (response.ok) {
-      alert('Registered! Redirecting to login');
-      window.location.href='/login';
+      alert("Registered! Redirecting to login");
+      window.location.href = "/login";
     } else {
-      alert('Failed to Register. Please Try Again');
+      alert("Failed to Register. Please Try Again");
     }
   } catch (error) {
     console.error("Error submitting data:", error);
@@ -33,31 +31,34 @@ export default function Register() {
   };
 
   return (
-    <div className='page'>
-     
+    <div className="page">
       <form onSubmit={handleSubmit}>
-      <h1>Register</h1>
+        <h1>Register</h1>
         <div>
-        <input
-          type="text"
-          placeholder="Username"
-          required
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+          <input
+            type="text"
+            placeholder="Username"
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
         </div>
         <div>
-        <input
-          type="password"
-          placeholder="Password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
-       
-        <button type="submit" className="loginBtn">Register</button>
-        <div>Already a User? Login <a href='/login'>Here</a></div>
+
+        <button type="submit" className="loginBtn">
+          Register
+        </button>
+        <div>
+          Already a User? Login <a href="/login">Here</a>
+        </div>
       </form>
     </div>
   );
